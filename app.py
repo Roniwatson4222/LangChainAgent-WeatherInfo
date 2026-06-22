@@ -41,6 +41,7 @@ st.markdown("Search + Weather AI Agent using LangChain")
 search_tool = TavilySearchResults(max_results=2)
 
 #Weather Tool
+@tool
 def getWeather_data(city: str) -> str:
     
     """
@@ -66,8 +67,8 @@ def getWeather_data(city: str) -> str:
         )
 
 
-result= search_tool.invoke("Give me the latest news on AI")
-result
+# result= search_tool.invoke("Give me the latest news on AI")
+# result
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
@@ -75,13 +76,14 @@ llm = ChatGoogleGenerativeAI(
     google_api_key=GOOGLE_API_KEY
 )
 
-response = llm.invoke("Day today")
-response
+# response = llm.invoke("Day today")
+# response
 
 #Prompt
 prompt= hub.pull("hwchase17/react")
 
-tools = [search_tool]
+tools = [search_tool,
+    getWeather_data]
 
 #Create Agent
 agent = create_react_agent(
